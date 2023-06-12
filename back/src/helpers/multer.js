@@ -14,4 +14,4 @@ const storage = multerCloudinary({
   allowedFormats: ["jpg", "png", "jpeg"],
 });
 
-module.exports = multer({ storage });
+export default multer({ storage });

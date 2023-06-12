@@ -2,13 +2,14 @@ import sql from "../db";
 
 export async function getThemes() {
   const themes = await sql`
-    select * from themes
+    select c.id, t.name, c.name as category_name, t.write, created_by from themes as t
+    inner join categories as c
+    on t.category_permission = c.id
   `;
   return themes;
 }
 
 export async function getThemeById(id) {
-  console.log(id);
   const themes = await sql`
     select * from themes where id = ${id}
   `;
@@ -17,14 +18,12 @@ export async function getThemeById(id) {
 
 export async function createTheme({
   name,
-  description,
-  value,
   write,
   category_permission,
   created_by,
 }) {
   const theme = sql`
-  insert into themes (name, write, description, value, category_permission, created_by) values (${name}, ${write}, ${description}, ${value}, ${category_permission}, ${created_by});
+  insert into themes (name, write, category_permission, created_by) values (${name}, ${write}, ${category_permission}, ${created_by});
   `;
   return theme;
 }

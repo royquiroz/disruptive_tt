@@ -30,7 +30,10 @@ router.post("/", async (req, res) => {
     } else if (user[0].role === "creator") {
       res.send("This user is not allowed to create themes");
     } else {
-      const theme = await createTheme({ created_by: user[0].id, ...body });
+      const theme = await createTheme({
+        ...body,
+        created_by: user[0].id,
+      });
       res.send({ theme });
     }
   } catch (error) {
